@@ -1,17 +1,9 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+@extends('layouts.admin')
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+@section('content')
 
-    <title>Projeto</title>
+<h1>Bem-vindo!</h1>
+<a href="{{ route('user.create') }}">Cadastrar</a>
 
-</head>
 
-<body>
-    <h1>Bem-vindo!</h1>
-    <a href="{{ route('user.create') }}">Cadastrar</a>
-</body>
-
-</html>
+@endsection

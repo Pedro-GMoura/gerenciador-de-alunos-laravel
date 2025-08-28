@@ -1,41 +1,40 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+@extends('layouts.admin')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+@section('content')
 
-<body>
-    <h1>Cadastrar Usuário</h1>
+<div class=".main-container">
 
-    @if(session('success'))
-    <p style="color:green">
-        {{session('success')}}
-    </p>
-    @endif
-    @if(session('error'))
-    <p style="color:red">
-        {{session('error')}}
-    </p>
-    @endif
 
-    <form action="{{ route('user.store') }}" method="post">
-        @csrf
+    <div class="content">
+        <div class="content-title">
+            <h1 class="page-title">Cadastrar Usuário</h1>
+            <a href="#" class="btn-primary">Listar</a>
+        </div>
 
-        <label for="name">Nome: </label>
-        <input type="text" name="name" id="name" placeholder="Nome completo" value="{{ old('name') }}" required><br><br>
+        <x-alert/>
 
-        <label for="email">E-mail: </label>
-        <input type="email" name="email" id="email" placeholder="E-mail do usuário" value="{{ old('email') }}" required><br><br>
+        <form action="{{ route('user.store') }}" method="post" class="form-container">
+            @csrf
 
-        <label for="password">Senha: </label>
-        <input type="password" name="password" id="password" placeholder="Digite sua senha" value="{{ old('password') }}" required><br><br>
+            <div class="mb-4">
+                <label for="name" class="form-label">Nome: </label>
+                <input type="text" name="name" id="name" placeholder="Nome completo" value="{{ old('name') }}" required class="form-input">
+            </div>
 
-        <button type="submit">Cadastrar</button>
+            <div class="mb-4">
+                <label for="email" class="form-label">E-mail: </label>
+                <input type="email" name="email" id="email" placeholder="E-mail do usuário" value="{{ old('email') }}" required class="form-input">
+            </div>
 
-    </form>
-</body>
+            <div class="mb-4">
+                <label for="password" class="form-label">Senha: </label>
+                <input type="password" name="password" id="password" placeholder="Digite sua senha" value="{{ old('password') }}" required class="form-input">
+            </div>
 
-</html>
+            <button type="submit" class="btn-success">Cadastrar</button>
+
+        </form>
+    </div>
+</div>
+
+@endsection
