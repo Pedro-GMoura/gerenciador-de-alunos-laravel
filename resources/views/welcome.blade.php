@@ -10,7 +10,8 @@
 </head>
 
 <body>
-
+    <h1>Bem-vindo!</h1>
+    <a href="{{ route('user.create') }}">Cadastrar</a>
 </body>
 
 </html>
