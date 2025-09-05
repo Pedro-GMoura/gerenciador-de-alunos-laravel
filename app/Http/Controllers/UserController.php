@@ -9,6 +9,14 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+
+    public function index() {
+
+        $users = User::orderByDesc('id')->paginate(10);
+
+        return view('users.index',['users'=>$users]);
+    }
+
     public function create()
     {
         return view('users.create');
