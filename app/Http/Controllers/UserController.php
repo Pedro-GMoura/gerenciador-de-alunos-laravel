@@ -10,11 +10,12 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
 
-    public function index() {
+    public function index()
+    {
 
         $users = User::orderByDesc('id')->paginate(10);
 
-        return view('users.index',['users'=>$users]);
+        return view('users.index', ['users' => $users]);
     }
 
     public function create()
@@ -36,6 +37,23 @@ class UserController extends Controller
             return redirect()->route('user.create')->with('success', "Usuário cadastrado com sucesso!");
         } catch (Exception $e) {
             return back()->withInput()->with('error', "Usuário não cadastrado!");
+        }
+    }
+
+    public function edit(User $user)
+    {
+        return view('users.edit', ['users' => $user]);
+    }
+    public function update(UserRequest $request, User $user)
+    {
+        try {
+            $user->update([
+                'name' => $request->name,
+                'email' => $request->email,
+            ]);
+            return redirect()->route('user.edit',['user'=>$user->id])->with('success', "Usuário editado com sucesso!");
+        } catch (Exception $e) {
+            return back()->withInput()->with('error', "Usuário não editado!");
         }
     }
 }
