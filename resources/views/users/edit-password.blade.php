@@ -13,18 +13,13 @@
 
         <x-alert/>
 
-        <form action="{{ route('user.update',['user'=>$users->id]) }}" method="post" class="form-container">
+        <form action="{{ route('user.updatePassword',['user'=>$users->id]) }}" method="post" class="form-container">
             @csrf
             @method('PUT')
 
             <div class="mb-4">
-                <label for="name" class="form-label">Nome: </label>
-                <input type="text" name="name" id="name" placeholder="Nome completo" value="{{ old('name', $users->name) }}" class="form-input">
-            </div>
-
-            <div class="mb-4">
-                <label for="email" class="form-label">E-mail: </label>
-                <input type="email" name="email" id="email" placeholder="E-mail do usuário" value="{{ old('email', $users->email) }}"  class="form-input">
+                <label for="name" class="form-label">Nova senha: </label>
+                <input type="password" name="password" id="password" placeholder="Digite sua nova senha" class="form-input">
             </div>
 
             <button type="submit" class="btn-warning">Salvar</button>

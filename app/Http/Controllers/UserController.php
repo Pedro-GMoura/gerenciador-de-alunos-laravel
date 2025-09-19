@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
+use App\Http\Requests\PasswordRequest;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -61,6 +62,19 @@ class UserController extends Controller
             return redirect()->route('user.show',['user'=>$user->id])->with('success', "Usuário editado com sucesso!");
         } catch (Exception $e) {
             return back()->withInput()->with('error', "Usuário não editado!");
+        }
+    }
+    public function updatePassword(PasswordRequest $request, User $user)
+    {
+        $data = $request->validated();
+
+        try {
+            $user->update([
+                'password' => $data['password'],
+            ]);
+            return redirect()->route('user.show',['user'=>$user->id])->with('success', "Senha editada com sucesso!");
+        } catch (Exception $e) {
+            return back()->withInput()->with('error', "Senha não alterada!");
         }
     }
 }
