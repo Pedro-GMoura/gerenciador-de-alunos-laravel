@@ -13,9 +13,13 @@ class UserController extends Controller
     public function index()
     {
 
-        $users = User::orderByDesc('id')->paginate(10);
+        $user = User::orderByDesc('id')->paginate(10);
 
-        return view('users.index', ['users' => $users]);
+        return view('users.index', ['users' => $user]);
+    }
+
+    public function show(User $user){
+        return view('users.show', ['user' => $user]);
     }
 
     public function create()
@@ -25,16 +29,15 @@ class UserController extends Controller
 
     public function store(UserRequest $request)
     {
-        //dd($request);
-
+        
         try {
-            user::Create([
+            $user = User::Create([
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => $request->password,
             ]);
-
-            return redirect()->route('user.create')->with('success', "Usuário cadastrado com sucesso!");
+            
+            return redirect()->route('user.show',['user' => $user->id])->with('success', "Usuário cadastrado com sucesso!");
         } catch (Exception $e) {
             return back()->withInput()->with('error', "Usuário não cadastrado!");
         }
@@ -42,7 +45,11 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
-        return view('users.edit', ['users' => $user]);
+        return view('users.edit', ['user' => $user]);
+    }
+    public function editPassword(User $user)
+    {
+        return view('users.edit-password', ['users' => $user]);
     }
     public function update(UserRequest $request, User $user)
     {
@@ -51,7 +58,7 @@ class UserController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
             ]);
-            return redirect()->route('user.edit',['user'=>$user->id])->with('success', "Usuário editado com sucesso!");
+            return redirect()->route('user.show',['user'=>$user->id])->with('success', "Usuário editado com sucesso!");
         } catch (Exception $e) {
             return back()->withInput()->with('error', "Usuário não editado!");
         }

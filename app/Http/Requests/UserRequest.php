@@ -8,6 +8,7 @@ use Illuminate\Foundation\Http\FormRequest;
  * @property string $name
  * @property string $email
  * @property string $password
+ * @method mixed route()
  */
 
 class UserRequest extends FormRequest
@@ -24,6 +25,7 @@ class UserRequest extends FormRequest
      * Get the validation rules that apply to the request.
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * 
      */
     public function rules(): array
     {
