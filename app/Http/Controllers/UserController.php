@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UserRequest;
 use App\Http\Requests\PasswordRequest;
+use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Exception;
-use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-
     public function index()
     {
 
@@ -19,7 +17,8 @@ class UserController extends Controller
         return view('users.index', ['users' => $user]);
     }
 
-    public function show(User $user){
+    public function show(User $user)
+    {
         return view('users.show', ['user' => $user]);
     }
 
@@ -30,17 +29,17 @@ class UserController extends Controller
 
     public function store(UserRequest $request)
     {
-        
+
         try {
             $user = User::Create([
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => $request->password,
             ]);
-            
-            return redirect()->route('user.show',['user' => $user->id])->with('success', "Usuário cadastrado com sucesso!");
+
+            return redirect()->route('user.show', ['user' => $user->id])->with('success', 'Usuário cadastrado com sucesso!');
         } catch (Exception $e) {
-            return back()->withInput()->with('error', "Usuário não cadastrado!");
+            return back()->withInput()->with('error', 'Usuário não cadastrado!');
         }
     }
 
@@ -48,10 +47,12 @@ class UserController extends Controller
     {
         return view('users.edit', ['user' => $user]);
     }
+
     public function editPassword(User $user)
     {
         return view('users.edit-password', ['users' => $user]);
     }
+
     public function update(UserRequest $request, User $user)
     {
         try {
@@ -59,11 +60,13 @@ class UserController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
             ]);
-            return redirect()->route('user.show',['user'=>$user->id])->with('success', "Usuário editado com sucesso!");
+
+            return redirect()->route('user.show', ['user' => $user->id])->with('success', 'Usuário editado com sucesso!');
         } catch (Exception $e) {
-            return back()->withInput()->with('error', "Usuário não editado!");
+            return back()->withInput()->with('error', 'Usuário não editado!');
         }
     }
+
     public function updatePassword(PasswordRequest $request, User $user)
     {
         $data = $request->validated();
@@ -72,9 +75,20 @@ class UserController extends Controller
             $user->update([
                 'password' => $data['password'],
             ]);
-            return redirect()->route('user.show',['user'=>$user->id])->with('success', "Senha editada com sucesso!");
+
+            return redirect()->route('user.show', ['user' => $user->id])->with('success', 'Senha editada com sucesso!');
         } catch (Exception $e) {
-            return back()->withInput()->with('error', "Senha não alterada!");
+            return back()->withInput()->with('error', 'Senha não alterada!');
+        }
+    }
+
+    public function destroy(User $user)
+    {
+        try {
+            $user->delete();
+            return redirect()->route('user.index')->with('success', 'Usuário excluído com sucesso!');
+        } catch (Exception $e) {
+            return redirect()->route('user.index')->with('error', 'Usuário não excluído.');
         }
     }
 }
