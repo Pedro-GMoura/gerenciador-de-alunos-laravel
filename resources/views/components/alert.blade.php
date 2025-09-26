@@ -1,19 +1,44 @@
-@if(session('success'))
-<div class="alart-success">
-    {{session('success')}}
-</div>
-
+@if (session('success'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                icon: 'success',
+                title: 'Pronto!',
+                text: '{{ session('success') }}',
+                confirmButtonText: 'OK'
+            });
+        });
+    </script>
 @endif
-@if(session('error'))
-<div class="alart-error">
-    {{session('error')}}
-</div>
+@if (session('error'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                icon: 'error',
+                title: 'Erro!',
+                text: '{{ session('error') }}',
+                confirmButtonText: 'OK'
+            });
+        });
+    </script>
 @endif
 
 @if ($errors->any())
-    <div class="alart-error">
-        @foreach ($errors->all() as $error)
-            {{ $error }}<br>
-        @endforeach
-</div>
+    @php
+        $messages = '';
+        foreach ($errors->all() as $error) {
+            $messages .= $error . '<br>';
+        }
+    @endphp
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                icon: 'error',
+                title: 'Erro!',
+                html: '{!! $messages !!}',
+                confirmButtonText: 'OK'
+            });
+        });
+    </script>
 @endif
