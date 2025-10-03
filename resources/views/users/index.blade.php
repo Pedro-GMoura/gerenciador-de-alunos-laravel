@@ -31,10 +31,11 @@
                                         class="btn-primary">Visualizar</a>
                                     <a href="{{ route('user.edit', ['user' => $user->id]) }}" class="btn-warning">Editar</a>
 
-                                    <form action="{{ route('user.destroy', ['user' => $user->id]) }}" method="POST">
+                                    <form action="{{ route('user.destroy', ['user' => $user->id]) }}" id="delete-form-{{ $user->id }}" method="POST">
                                         @method('delete')
                                         @csrf
-                                        <button type="submit" class="btn-danger" onclick="return confirm('Tem certeza que deseja apagar esse registro?')">Apagar</button>
+                                        <button type="button" class="btn-danger"
+                                            onclick="confirmDelete({{ $user->id }})">Apagar</button>
                                     </form>
 
                                 </td>
